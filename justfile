@@ -39,6 +39,16 @@ render-html: _ensure-dirs
     @echo "Built build/main.html and build/faq.html"
 
 # ------------------------------------------------------------------
+# Live preview: Marp server mode watches slides/ and auto-reloads browser
+# ------------------------------------------------------------------
+watch port="8080":
+    @echo "Marp live server (auto-reload on .md save). Ctrl-C to stop."
+    @echo "  Index:  http://$(hostname -I | awk '{print $1}'):{{port}}/"
+    @echo "  Main:   http://$(hostname -I | awk '{print $1}'):{{port}}/main.md"
+    @echo "  FAQ:    http://$(hostname -I | awk '{print $1}'):{{port}}/faq.md"
+    PORT={{port}} HOST=0.0.0.0 PATH="{{NODE_BIN}}:$PATH" npx --yes @marp-team/marp-cli@latest -s slides/ --html --allow-local-files --theme-set slides/theme.css
+
+# ------------------------------------------------------------------
 # Serve build/ over HTTP on 0.0.0.0 for remote browser viewing
 # ------------------------------------------------------------------
 serve port="8000":
