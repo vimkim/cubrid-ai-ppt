@@ -1,0 +1,12 @@
+# Marp build output (regenerable via `just render-pdf`)
+build/
+
+# OMC runtime / ephemeral state
+.omc/state/
+.omc/logs/
+.omc/sessions/
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,182 @@
+/* @theme bookk */
+/*
+ * Marp theme for CUBRID Claude Code presentation
+ * 16:9, high contrast
+ * Font: Presentation (Freesentation, 9 weights)
+ * Fallback: Noto Sans CJK KR
+ * Webfonts via noonnu / jsdelivr CDN (render-time only; PDF embeds glyphs).
+ */
+
+@import "default";
+
+@font-face {
+  font-family: 'Presentation';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-1Thin.woff2') format('woff2');
+  font-weight: 100;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Presentation';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-2ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Presentation';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-3Light.woff2') format('woff2');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Presentation';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-4Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Presentation';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Presentation';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-6SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Presentation';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Presentation';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-8ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Presentation';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');
+  font-weight: 900;
+  font-display: swap;
+}
+
+section {
+  font-family: 'Presentation', 'Noto Sans CJK KR', 'Malgun Gothic', sans-serif;
+  font-weight: 400;
+  font-size: 22pt;
+  line-height: 1.5;
+  padding: 50px 60px;
+  background: #ffffff;
+  color: #1a1a1a;
+}
+
+section h1 {
+  font-family: 'Presentation', 'Noto Sans CJK KR', sans-serif;
+  font-weight: 800;
+  color: #0a2540;
+  font-size: 1.7em;
+  margin-bottom: 0.5em;
+  border-bottom: 3px solid #0a2540;
+  padding-bottom: 0.2em;
+}
+
+section h2 {
+  font-family: 'Presentation', 'Noto Sans CJK KR', sans-serif;
+  font-weight: 700;
+  color: #0a2540;
+  font-size: 1.25em;
+  margin-top: 0.8em;
+}
+
+strong, b {
+  font-weight: 700;
+}
+
+section code,
+section pre {
+  font-family: 'D2Coding', 'Noto Sans Mono CJK KR', 'Consolas', 'Menlo', monospace;
+}
+
+section pre {
+  background: #f4f6f8;
+  padding: 0.8em 1em;
+  border-radius: 6px;
+  font-size: 0.85em;
+}
+
+section code {
+  background: #f0f0f0;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+section table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9em;
+}
+
+section th,
+section td {
+  border: 1px solid #cbd1d8;
+  padding: 0.5em 0.8em;
+  text-align: left;
+}
+
+section th {
+  background: #f0f4f8;
+  font-weight: 600;
+}
+
+/* Section title (Part x) */
+section.lead {
+  text-align: center;
+}
+
+section.lead h1 {
+  font-size: 2.3em;
+  border: none;
+}
+
+/* Hero/Mention qualifier annotation */
+.qualifier {
+  color: #666;
+  font-size: 0.80em;
+  font-style: italic;
+  display: block;
+  margin-top: 0.8em;
+}
+
+/* Caveat / limitations callout */
+.caveat {
+  background: #fff3cd;
+  padding: 0.6em 0.9em;
+  border-left: 4px solid #ffc107;
+  border-radius: 4px;
+  margin: 0.8em 0;
+  font-size: 0.92em;
+}
+
+/* TBD marker for FAQ B1 */
+.tbd {
+  color: #b00;
+  font-weight: bold;
+}
+
+/* Footer page number */
+section::after {
+  color: #999;
+  font-size: 0.7em;
+}
