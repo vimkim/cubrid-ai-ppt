@@ -119,17 +119,30 @@ size: 16:9
 
 # Claude Code 는 그냥 "챗봇" 이 아니다 — 강력한 Agent Harness
 
-**Harness = 모델을 둘러싼 도구·메모리·실행 환경의 총합**
+<div style="text-align: center; margin: 0.4em 0;">
 
-- **파일 시스템 직접 조작** — Read / Write / Edit / Glob / Grep 으로 코드베이스 자유 탐색
-- **임의 명령 실행** — Bash 도구로 빌드·테스트·git·gh·jq 등 CLI 전부 호출 가능
-- **장기 실행 / 백그라운드** — 빌드·테스트를 백그라운드로 돌리고 결과만 가져오는 패턴
-- **MCP (Model Context Protocol)** — clangd LSP, GitHub, JIRA, DB 등 외부 시스템 표준 연결
-- **Skill / Slash command / Plugin** — 반복 워크플로를 재사용 단위로 굳혀 호출
-- **Sub-agent / Team** — 여러 agent 가 병렬·계층적으로 협업 (architect, executor, reviewer 등)
-- **Hook / Auto-memory** — 작업 전후 자동 점검·학습, 세션 간 컨텍스트 유지
+<div style="display: inline-block; padding: 0.6em 1.5em; background: #2d4a8a; color: white; border-radius: 10px; font-weight: bold; font-size: 1.05em;">
+🤖 Claude Code Agent Harness — "사람처럼 일하는 환경"
+</div>
 
-> 단순 자동완성·코드 제안 도구와는 **완전히 다른 카테고리** — "사람처럼 일하는 환경" 이 핵심
+<div style="margin: 0.3em 0; color: #888; font-size: 0.85em;">↓ 모델을 둘러싼 도구·메모리·실행 환경 ↓</div>
+
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4em; margin-bottom: 0.4em; font-size: 0.78em;">
+<div style="padding: 0.4em; background: #f5f0ff; border: 1px solid #b9a; border-radius: 6px;"><b>📁 파일 시스템 조작</b><br>Read / Write / Edit / Glob / Grep</div>
+<div style="padding: 0.4em; background: #f5f0ff; border: 1px solid #b9a; border-radius: 6px;"><b>⚡ 임의 명령 실행</b><br>Bash · git · gh · jq · CLI 전반</div>
+<div style="padding: 0.4em; background: #f5f0ff; border: 1px solid #b9a; border-radius: 6px;"><b>⏳ 장기 / 백그라운드</b><br>빌드·테스트 비동기 실행</div>
+<div style="padding: 0.4em; background: #f5f0ff; border: 1px solid #b9a; border-radius: 6px;"><b>🔌 MCP</b><br>clangd / GitHub / JIRA / DB</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4em; font-size: 0.78em;">
+<div style="padding: 0.4em; background: #f5f0ff; border: 1px solid #b9a; border-radius: 6px;"><b>🛠️ Skill / Slash / Plugin</b><br>반복 워크플로 재사용</div>
+<div style="padding: 0.4em; background: #f5f0ff; border: 1px solid #b9a; border-radius: 6px;"><b>👥 Sub-agent / Team</b><br>병렬·계층 협업</div>
+<div style="padding: 0.4em; background: #f5f0ff; border: 1px solid #b9a; border-radius: 6px;"><b>🪝 Hook / Auto-memory</b><br>세션 간 컨텍스트 유지</div>
+</div>
+
+</div>
+
+> 단순 자동완성·코드 제안과는 **완전히 다른 카테고리**
 
 <!-- timing: 75 -->
 
@@ -388,15 +401,23 @@ size: 16:9
 
 **Scenario**: 5시간 자율 작업 중, 빌드는 되지만 실행 시 코어덤프 나는 상황 반복.
 
-**Claude 가 알아서 돌린 루프**
+**Claude 가 알아서 돌린 루프 — 사람 개입 없이 닫힌 cycle**
 
-1. 빌드 → 실행
-2. 코어덤프 발생 → `gdb` 로 `bt` 자동 수집
-3. 스택 트레이스 + 관련 소스 읽고 **원인 가설 수립**
-4. 코드 수정 → 다시 빌드
-5. 다시 실행 → 새 코어덤프 or 성공까지 **무한 반복**
+<div style="display: flex; gap: 0.4em; align-items: center; flex-wrap: wrap; justify-content: center; font-size: 0.85em; margin: 0.6em 0;">
+<div style="padding: 0.5em 0.7em; background: #eef; border: 1px solid #99c; border-radius: 6px;">① 빌드 → 실행</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.5em 0.7em; background: #eef; border: 1px solid #99c; border-radius: 6px;">② <code>gdb bt</code> 자동 수집<br><small>(코어덤프 발생)</small></div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.5em 0.7em; background: #eef; border: 1px solid #99c; border-radius: 6px;">③ 스택+소스 → <b>원인 가설</b></div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.5em 0.7em; background: #eef; border: 1px solid #99c; border-radius: 6px;">④ 코드 수정 → 다시 빌드</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.5em 0.7em; background: #d4f4d4; border: 1px solid #6c6; border-radius: 6px;">⑤ 성공? ✅</div>
+</div>
 
-<!-- timing: 40 -->
+<div style="text-align: center; color: #c33; font-weight: bold; font-size: 0.9em; margin-top: 0.3em;">↻ 새 코어덤프 시 ① 로 돌아가 <b>무한 반복</b> — 사람 개입 0</div>
+
+<!-- timing: 50 -->
 
 ---
 
@@ -434,40 +455,6 @@ size: 16:9
 - 변경 코드 범위를 Claude에 보여주고 초안 요청 → 컨벤션에 맞는 초안 빠르게 확보
 
 <span class="qualifier">이 특정 경험에서의 결과</span>
-
-<!-- timing: 45 -->
-
----
-
-# 문서 영역 — 이런 것도 했습니다
-
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; text-align: left;">
-
-<div>
-
-**Greptile 봇 리뷰 일괄 응답**
-
-- Before: 코멘트당 개별 읽고 응답 작성
-- After: PR의 Greptile bot 코멘트 전체에 대한 응답 초안을 한 번에 획득
-- 초안을 기반으로 수정하는 방식으로 시간 단축
-
-</div>
-
-<div>
-
-**조사 노트 → 내부 문서 변환**
-
-- Before: 메모를 처음부터 재구조화
-- After: Claude가 구조화된 초안 생성
-- 원 메모에 없던 내용을 "보충"으로 추가한 적 있음
-
-</div>
-
-</div>
-
-<div class="caveat">주의: Claude가 원 메모에 <b>없던 내용</b>을 "보충"으로 추가한 적이 있습니다. 문서화의 자동화는 확인의 자동화가 아닙니다.</div>
-
-<!-- timing: 50 -->
 
 ---
 
@@ -652,15 +639,53 @@ size: 16:9
 
 **가설 검증 방식이 바뀌었음**
 
-**이전 방식**
+<div style="margin: 0.5em 0;">
 
-가설 → 조사 → 코드 분석 → 설계 → 구현 → 개발자 검증 → TC 생성 → 스펙 변경 …
+<div style="margin-bottom: 0.6em;">
+<b>이전 방식</b>
+<div style="display: flex; gap: 0.3em; flex-wrap: wrap; align-items: center; font-size: 0.78em; margin-top: 0.3em;">
+<div style="padding: 0.4em 0.6em; background: #fff0f0; border: 1px solid #c99; border-radius: 4px;">가설</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #fff0f0; border: 1px solid #c99; border-radius: 4px;">조사</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #fff0f0; border: 1px solid #c99; border-radius: 4px;">코드 분석</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #fff0f0; border: 1px solid #c99; border-radius: 4px;">설계</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #fff0f0; border: 1px solid #c99; border-radius: 4px;">구현</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #fff0f0; border: 1px solid #c99; border-radius: 4px;">개발자 검증</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #fff0f0; border: 1px solid #c99; border-radius: 4px;">TC 생성</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #fff0f0; border: 1px solid #c99; border-radius: 4px;">스펙 변경 …</div>
+</div>
+</div>
 
-**지금 방식**
+<div>
+<b>지금 방식</b>
+<div style="display: flex; gap: 0.3em; flex-wrap: wrap; align-items: center; font-size: 0.78em; margin-top: 0.3em;">
+<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;">가설</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;"><b>POC 검증 (Claude)</b></div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;">설계</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;">스펙 검증</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;">unit test · TC</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;">TC 검증</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;"><b>AI 구현</b></div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;">코드 리뷰</div>
+</div>
+</div>
 
-가설 → Claude 로 빠른 POC 검증 → 설계 → 스펙 검증 → unit test · TC 작성 → TC 검증 → AI 가 구현 → 코드 리뷰
+</div>
 
-**장점** — 각 단계마다 **좀 더 명확하고 빠른 피드백**을 받으며 진행할 수 있음
+**장점** — 각 단계마다 **명확하고 빠른 피드백**을 받으며 진행
 
 <!-- timing: 50 -->
 
@@ -834,17 +859,29 @@ size: 16:9
 
 # AI 운영 방어 — 환경 갖추기 + Fail fast + Timeout
 
-**AI Agent 가 사람처럼 일하려면 사람과 같은 환경 + 잘못된 길에서 빠르게 빠져나오는 장치 필요**
+**AI Agent 가 멈춰도 사람도 모른 채 함께 정지 — 가장 비싼 "시간 낭비"**
 
-- 빌드 → DB 구동 → 예제 실행 → coredump 분석 → GDB attach 까지 가능해야 진짜 agent
-- 단순 코드 reading 만으로는 가설 검증 불가 → 추측에 머무름
-- 빌드·테스트·외부 호출이 **멈춰도 AI 는 계속 기다림** — 가장 비싼 비용 **"시간 낭비"**
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4em; margin: 0.5em 0; font-size: 0.82em;">
 
-**대응 — 헛수고 방지 3단계**
+<div style="padding: 0.6em; background: #e6f4ff; border: 2px solid #4a80c0; border-radius: 8px; text-align: center;">
+<div style="font-size: 0.85em; color: #4a80c0; font-weight: bold;">1단계 방어</div>
+<div style="font-weight: bold; margin: 0.3em 0;">🛡️ 환경 명시</div>
+<small>worktree 위치 / 빌드 상태 / DB 실행 / coredump 위치 → AI 에 미리 알려주기</small>
+</div>
 
-- **환경 명시**: worktree 위치 / 빌드 가능 상태 / DB 실행 가능 / coredump 위치를 AI 에게 알려주기
-- **Skill 앞단 prerequisite**: branch 불일치·미빌드 상태에서 즉시 에러 중단 — "Fail fast" 가 가장 싼 디버깅
-- **Hang/무한 루프 방지**: timeout 짧게, "N분 경과 시 다른 방법을 찾아라" 지시, iteration 상한 알림
+<div style="padding: 0.6em; background: #fff4e6; border: 2px solid #c08040; border-radius: 8px; text-align: center;">
+<div style="font-size: 0.85em; color: #c08040; font-weight: bold;">2단계 방어</div>
+<div style="font-weight: bold; margin: 0.3em 0;">⚡ Fail Fast (prerequisite)</div>
+<small>Skill 앞단에서 branch 불일치·미빌드 즉시 중단 — 잘못된 환경에서 흘러간 토큰이 가장 비쌈</small>
+</div>
+
+<div style="padding: 0.6em; background: #ffe6e6; border: 2px solid #c04040; border-radius: 8px; text-align: center;">
+<div style="font-size: 0.85em; color: #c04040; font-weight: bold;">3단계 방어</div>
+<div style="font-weight: bold; margin: 0.3em 0;">⏱️ Timeout / Hang 방지</div>
+<small>timeout 짧게 / "N분 경과 시 다른 방법" 지시 / iteration 상한 알림</small>
+</div>
+
+</div>
 
 **더 나은 방식 모색 중**
 
@@ -859,15 +896,64 @@ size: 16:9
 
 **개발 4팀 송일한님 사례 · CUBRID 전체 모듈 코드 분석서**
 
+<div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 1em; align-items: center;">
+
+<div style="text-align: center;">
+<svg width="100%" viewBox="0 0 500 280" style="max-height: 240px;">
+  <line x1="250" y1="140" x2="120" y2="80" stroke="#aaa" stroke-width="1.5"/>
+  <line x1="250" y1="140" x2="380" y2="80" stroke="#aaa" stroke-width="1.5"/>
+  <line x1="250" y1="140" x2="100" y2="200" stroke="#aaa" stroke-width="1.5"/>
+  <line x1="250" y1="140" x2="400" y2="200" stroke="#aaa" stroke-width="1.5"/>
+  <line x1="250" y1="140" x2="180" y2="40" stroke="#aaa" stroke-width="1.5"/>
+  <line x1="250" y1="140" x2="320" y2="40" stroke="#aaa" stroke-width="1.5"/>
+  <line x1="250" y1="140" x2="220" y2="245" stroke="#aaa" stroke-width="1.5"/>
+  <line x1="250" y1="140" x2="290" y2="245" stroke="#aaa" stroke-width="1.5"/>
+  <line x1="120" y1="80" x2="180" y2="40" stroke="#bbb" stroke-width="1"/>
+  <line x1="380" y1="80" x2="320" y2="40" stroke="#bbb" stroke-width="1"/>
+  <line x1="100" y1="200" x2="220" y2="245" stroke="#bbb" stroke-width="1"/>
+  <line x1="400" y1="200" x2="290" y2="245" stroke="#bbb" stroke-width="1"/>
+  <line x1="120" y1="80" x2="100" y2="200" stroke="#bbb" stroke-width="1"/>
+  <line x1="380" y1="80" x2="400" y2="200" stroke="#bbb" stroke-width="1"/>
+
+  <circle cx="250" cy="140" r="26" fill="#2d4a8a"/>
+  <text x="250" y="145" text-anchor="middle" fill="white" font-size="11" font-weight="bold">heap_file</text>
+
+  <circle cx="120" cy="80" r="16" fill="#5a7fc0"/>
+  <text x="120" y="84" text-anchor="middle" fill="white" font-size="9">btree</text>
+  <circle cx="380" cy="80" r="16" fill="#5a7fc0"/>
+  <text x="380" y="84" text-anchor="middle" fill="white" font-size="9">vacuum</text>
+  <circle cx="100" cy="200" r="16" fill="#5a7fc0"/>
+  <text x="100" y="204" text-anchor="middle" fill="white" font-size="9">page</text>
+  <circle cx="400" cy="200" r="16" fill="#5a7fc0"/>
+  <text x="400" y="204" text-anchor="middle" fill="white" font-size="9">log</text>
+
+  <circle cx="180" cy="40" r="12" fill="#7ab57a"/>
+  <text x="180" y="44" text-anchor="middle" fill="white" font-size="8">OOS</text>
+  <circle cx="320" cy="40" r="12" fill="#7ab57a"/>
+  <text x="320" y="44" text-anchor="middle" fill="white" font-size="8">MVCC</text>
+  <circle cx="220" cy="248" r="12" fill="#7ab57a"/>
+  <text x="220" y="252" text-anchor="middle" fill="white" font-size="8">DDL</text>
+  <circle cx="290" cy="248" r="12" fill="#7ab57a"/>
+  <text x="290" y="252" text-anchor="middle" fill="white" font-size="8">DML</text>
+</svg>
+<div style="font-size: 0.7em; color: #666;">graph view 시각화 (실제 데모는 아래 링크 참고)</div>
+</div>
+
+<div>
+
 - 공개 데모: <https://xmilex-git.github.io/claude-obsidian/>
-- Obsidian **graph view** 로 모듈·함수·개념을 위키처럼 양방향 링크
+- Obsidian **graph view** 로 모듈·함수·개념을 양방향 링크
 - AI 가 그래프 노드를 따라가며 **필요한 컨텍스트만 골라 읽음** → 분석 비용·토큰 절약
-- 사람에게도 그대로 **인수인계 문서** — 1석 2조
+- 사람에게도 **인수인계 문서** — 1석 2조
 
 **조직 자산화 제안**
 
-- **팀 단위**: 각 팀이 담당 모듈을 Obsidian / 마크다운 위키로 정리 (graph view 호환)
-- **본부 단위**: 팀별 분석서를 수집·인덱싱 → AI 가 본부 전체 코드베이스에 일관된 컨텍스트로 접근
+- **팀 단위**: 담당 모듈을 Obsidian / 마크다운 위키로 정리
+- **본부 단위**: 팀별 분석서를 수집·인덱싱 → 본부 전체 일관 컨텍스트
+
+</div>
+
+</div>
 
 <span class="qualifier">현재는 한 사람에 의존도 집중 — 조직 자산화 시 신규 입사자 온보딩 + AI 컨텍스트 동시 해결</span>
 
@@ -987,22 +1073,30 @@ claude "이 diff 기반으로 PR description 작성해줘"
 
 # 자동화 자동화 — skill → script → plugin
 
-**`/learner` → `/skill-creator` → script → plugin 흐름**
+**4단계 진화 — 시행착오 자체를 자산으로**
 
-1. 오래 걸린 작업을 한 번 끝까지 수행
-2. `/learner` 로 절차 학습 → `/skill-creator` 로 정식 skill 등록
-3. 안정화되면 **결정론적 스크립트**로 내려 토큰·속도·재현성 확보
-4. 관련 스크립트·skill 묶어 **Claude Code Plugin** 으로 배포
+<div style="display: grid; grid-template-columns: repeat(7, auto); gap: 0.3em; align-items: center; justify-content: center; font-size: 0.78em; margin: 0.5em 0;">
+
+<div style="padding: 0.4em 0.6em; background: #ffe6e6; border: 1px solid #c66; border-radius: 6px; text-align: center;"><b>① 첫 시도</b><br><small>시행착오·고비용</small></div>
+<div style="color: #999; font-size: 1.1em;">→</div>
+
+<div style="padding: 0.4em 0.6em; background: #fff5e6; border: 1px solid #c96; border-radius: 6px; text-align: center;"><b>② Skill 등록</b><br><small><code>/learner</code> → <code>/skill-creator</code></small></div>
+<div style="color: #999; font-size: 1.1em;">→</div>
+
+<div style="padding: 0.4em 0.6em; background: #fffbe6; border: 1px solid #cc6; border-radius: 6px; text-align: center;"><b>③ Script 화</b><br><small>결정론적 실행<br>AI 호출 없이 OK</small></div>
+<div style="color: #999; font-size: 1.1em;">→</div>
+
+<div style="padding: 0.4em 0.6em; background: #e6ffe6; border: 1px solid #6c6; border-radius: 6px; text-align: center;"><b>④ Plugin 배포</b><br><small>개인 → 팀 → 본부</small></div>
+
+</div>
+
+<div style="text-align: center; color: #888; font-size: 0.85em;">→ 토큰 ↓ · 속도 ↑ · 재현성 ↑</div>
 
 **왜 게임체인저인가**
 
 - 첫 시도 비용을 **미래의 모든 반복에 분할 상환**
 - "어떻게 하라" 가 아닌 **"무엇을 원한다"** 만 말해도 AI 가 절차 저장
-- 팀 단위 공유 시 "한 사람이 뚫은 길" 을 팀 전체가 빠르게
-
-**배포 계층**
-
-- 개인 플러그인 → 팀 플러그인 → 연구개발본부 플러그인
+- 팀 단위 공유 시 **"한 사람이 뚫은 길" 을 팀 전체가 빠르게**
 - **장기 제안**: 플러그인 운영 자체를 공식 업무로 추가하면 자산이 축적됨
 
 <span class="qualifier">"자동화하는 작업을 자동화" — 한 번 익히면 평생 재산</span>
