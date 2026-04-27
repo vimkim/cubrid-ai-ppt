@@ -965,6 +965,50 @@ claude "이 diff 기반으로 PR description 작성해줘"
 
 ---
 
+# 연구개발본부 업무 자동화 후보 — Git / GitHub 영역
+
+**① Git 일상 흐름 자동화**
+
+- `git stage → add → commit → push` 한 번에 — 변경 분석으로 **커밋 메시지 자동 작성**
+- 팀 컨벤션(prefix, JIRA 키, 영문/한글 요약)을 학습시켜 **일관된 메시지 품질**
+
+**② Git Merge Conflict 해결 — 컨텍스트 기반**
+
+- "develop 쪽 의도가 우선" / "특정 모듈은 feature 우선" 같은 **자연어 지시를 받아** AI 가 hunk 단위로 판단
+- 단순 `--ours` / `--theirs` 보다 **세분화된 conflict 해결 정책** 적용 가능
+- 충돌 패턴이 반복되면 skill 로 굳혀 매번 사람이 일일이 풀 필요 없어짐
+
+**③ gh CLI / API 자동화**
+
+- PR 생성·draft 전환, **리뷰어 자동 등록·re-request**, 댓글·대댓글, 머지 후 정리
+- **Greptile 봇 응답 일괄 처리** — 이미 발표자 운영 중 (skill 화)
+- PR 리뷰 후 코멘트 자동 게시 등 **반복 GitHub 업무 전반**
+
+<!-- timing: 75 -->
+
+---
+
+# 연구개발본부 업무 자동화 후보 — JIRA / 문서 영역
+
+**④ JIRA REST API 연동 — CBRD 이슈 양방향 자동화**
+
+- **CBRD-XXXXX 다운로드** → JIRA grammar 를 **마크다운으로 변환** → AI 가 읽기 쉬운 형태로 보관
+- AI 와 작성한 **마크다운을 JIRA grammar 로 역변환** → API 로 이슈 본문 직접 업데이트
+- 이슈 검색·코멘트 추가·status 전환까지 자동화 가능 → **JIRA 가 SSOT 로 작동하는 SDD 흐름과 연결**
+
+**왜 이 4가지를 우선 후보로 꼽았는가**
+
+- **매일 반복** 되는 작업 — ROI 가 즉시 눈에 보임
+- **개인 작업물이 아닌 협업 인터페이스** (git/PR/JIRA) — 팀 단위로 효과 증폭
+- 외부 API/CLI 가 잘 정비돼 있어 **AI 가 안전하게 다루기 쉬움**
+- 한 번 skill 화하면 **본부 전체가 공유** 가능
+
+<span class="qualifier">발표자 현재 운영 — Greptile 응답·PR 리뷰 보조·JIRA 이슈 작성 보조까지는 이미 skill 화. 나머지는 발전 중</span>
+
+<!-- timing: 75 -->
+
+---
+
 # 결론 2
 
 Claude Max (Opus 4.7), 꼭 써봐야 한다
