@@ -828,6 +828,26 @@ size: 16:9
 
 ---
 
+# spec.md 를 버전 관리 — Spec-as-Code 패턴
+
+**MD SSOT 를 git 으로 관리하는 사례가 빠르게 늘어남**
+
+- 코드와 **동일한 워크플로** — `git add spec.md`, PR 리뷰, `git log` / `git blame` 으로 변경 이력 추적
+- JIRA 처럼 외부에서 잊혀지지 않음 → **stale 위험 ↓**
+
+**Spec ↔ Prompt 통합 — spec 자체가 AI 에 전달되는 prompt**
+
+- 도구 생태계 표준화 중 — `.claude/skills/`, `.omc/specs/`, `AGENTS.md`, `.cursor/rules`, `.windsurf/rules` 등
+- spec 한 줄 수정 → AI 동작 / 산출물 변경 — **모두 git 위에서 추적**
+
+**효과** — 코드 품질 관리 노하우(리뷰·lint·테스트)를 **spec 품질 관리에 그대로 적용**
+
+> "잘 쓴 spec.md = 잘 동작하는 AI = 잘 구현된 코드 + 잘 생성된 이슈/PR"
+
+<!-- timing: 90 -->
+
+---
+
 # Test Driven Development (TDD)
 
 **실패하는 테스트를 먼저 작성하고, 그 테스트를 통과시키도록 구현하는 개발 방식**
@@ -988,18 +1008,16 @@ size: 16:9
 
 **④ JIRA REST API 연동 — CBRD 이슈 양방향 자동화**
 
-- **CBRD-XXXXX 다운로드** → JIRA grammar 를 **마크다운으로 변환** → AI 가 읽기 쉬운 형태로 보관
-- AI 와 작성한 **마크다운을 JIRA grammar 로 역변환** → API 로 이슈 본문 직접 업데이트
-- 이슈 검색·코멘트 추가·status 전환까지 자동화 가능 → **MD SSOT 에서 JIRA·PR 자동 생성하는 SDD 흐름과 연결**
+- **CBRD-XXXXX 다운로드** → JIRA grammar 를 마크다운으로 변환 → AI 가 다루기 쉬운 형태로 보관
+- AI 가 작성한 **마크다운을 JIRA grammar 로 역변환** → API 로 이슈 본문 직접 업데이트
+- 이슈 검색·코멘트·status 전환 자동화 → **MD SSOT → JIRA·PR 자동 생성하는 SDD 흐름과 연결**
 
 **왜 이 4가지를 우선 후보로 꼽았는가**
 
-- **매일 반복** 되는 작업 — ROI 가 즉시 눈에 보임
-- **개인 작업물이 아닌 협업 인터페이스** (git/PR/JIRA) — 팀 단위로 효과 증폭
-- 외부 API/CLI 가 잘 정비돼 있어 **AI 가 안전하게 다루기 쉬움**
-- 한 번 skill 화하면 **본부 전체가 공유** 가능
+- 매일 반복되는 작업 → ROI 즉시 눈에 보임
+- 협업 인터페이스 (git/PR/JIRA) → 팀 단위 효과 증폭, 한 번 skill 화하면 본부 전체 공유
 
-<span class="qualifier">발표자 현재 운영 — Greptile 응답·PR 리뷰 보조·JIRA 이슈 작성 보조까지는 이미 skill 화. 나머지는 발전 중</span>
+<span class="qualifier">발표자 현재 운영 — Greptile·PR 리뷰·JIRA 이슈 작성 보조까지 skill 화, 나머지는 발전 중</span>
 
 <!-- timing: 75 -->
 
