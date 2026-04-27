@@ -838,6 +838,49 @@ claude "이 diff 기반으로 PR description 작성해줘"
 
 ---
 
+# CUBRID 개발 준비 — AI Agent 도 사람과 똑같이 개발한다
+
+**AI 는 코드를 "읽기만" 할 때보다 직접 "굴려볼 때" 훨씬 강력해짐**
+
+- 사람이 개발할 때 필요한 것 = AI Agent 가 필요한 것 (동일)
+- 단순 코드 reading 만으로는 가설 검증이 불가능 → 추측에 머무름
+- **빌드 → DB 구동 → 예제 실행 → coredump 분석 → GDB attach** 까지 가능해야 진짜 agent
+
+**AI 에게 알려줘야 하는 환경 사실들**
+
+- 현재 worktree 가 **CUBRID repo 내부**에 있다
+- **빌드 가능 상태** (CMake 설정, 의존성 설치 완료)
+- **DB 인스턴스 실행 가능** (cubrid server start/stop, demodb 준비)
+- **예제 SQL/CSQL 실행 가능**, coredump 가 정해진 위치에 떨어진다
+
+이 전제가 깔리면 AI 가 **사람 개발자처럼 가설→실험→검증** 루프를 자율로 돌림
+
+<!-- timing: 75 -->
+
+---
+
+# 환경 전제 검증 — Skill 앞단의 prerequisite 패턴
+
+**현재 발표자 운영 방식**
+
+- 각 Skill 의 **맨 앞에 `prerequisite` / `requirements` 블록**을 둠
+- 빌드 가능 상태인지, **현재 branch 가 기대 branch 와 일치**하는지 등을 즉시 점검
+- 실패하면 **즉시 에러로 중단** → AI 가 잘못된 환경에서 헛수고하지 않도록 차단
+
+**왜 이렇게 하나**
+
+- AI 는 환경 가정을 **암묵적으로 추측**하기 쉬움 → 잘못된 전제 위에서 1시간 낭비하는 사고 방지
+- "Fail fast" 가 가장 싼 디버깅 — 잘못된 환경에서 흘러간 토큰이 가장 비쌈
+
+**더 나은 방식 모색 중**
+
+- 단발성 검증 → **세션 시작 hook**, MCP 도구, 혹은 자동 복구(branch checkout / rebuild)까지
+- 팀·본부 차원의 **표준 prerequisite 라이브러리** 가 있으면 더 효과적
+
+<!-- timing: 75 -->
+
+---
+
 # AI 가 읽을 수 있는 모듈 분석서 — Obsidian Graph 사례
 
 **개발 4팀 송일한님 · CUBRID 전체 모듈 코드 분석서**
