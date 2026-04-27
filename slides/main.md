@@ -155,6 +155,43 @@ size: 16:9
 
 ---
 
+# Claude Code 는 그냥 "챗봇" 이 아니다 — 강력한 Agent Harness
+
+**Harness = 모델을 둘러싼 도구·메모리·실행 환경의 총합**
+
+- **파일 시스템 직접 조작** — Read / Write / Edit / Glob / Grep 으로 코드베이스 자유 탐색
+- **임의 명령 실행** — Bash 도구로 빌드·테스트·git·gh·jq 등 CLI 전부 호출 가능
+- **장기 실행 / 백그라운드** — 빌드·테스트를 백그라운드로 돌리고 결과만 가져오는 패턴
+- **MCP (Model Context Protocol)** — clangd LSP, GitHub, JIRA, DB 등 외부 시스템 표준 연결
+- **Skill / Slash command / Plugin** — 반복 워크플로를 재사용 단위로 굳혀 호출
+- **Sub-agent / Team** — 여러 agent 가 병렬·계층적으로 협업 (architect, executor, reviewer 등)
+- **Hook / Auto-memory** — 작업 전후 자동 점검·학습, 세션 간 컨텍스트 유지
+
+> 단순 자동완성·코드 제안 도구와는 **완전히 다른 카테고리** — "사람처럼 일하는 환경" 이 핵심
+
+<!-- timing: 75 -->
+
+---
+
+# Claude Code × CUBRID — 진짜 개발자처럼 일한다
+
+**Claude 가 CUBRID repo 에서 실제로 할 수 있는 일들**
+
+- **빌드** — `cmake` / `make` 호출, 에러 로그 분석, 의존성 자동 설치
+- **DB 인스턴스 운영** — `cubrid server start/stop`, demodb 준비, csql 실행
+- **SQL / 예제 실행** — 테스트 시나리오를 직접 굴려보며 가설 검증
+- **clangd LSP 호출** — 함수 정의·참조·호출 계층을 코드 전체에서 자동 추적
+- **shell-test 디버깅** — expected/actual diff 분석, 실패 원인 자동 정리
+- **GDB attach + coredump 분석** — 스택 트레이스 읽고 해석, 함수별 의심 지점 좁히기
+- **Valgrind / sanitizer 결과 해석** — 메모리 leak·undefined behavior 진단
+- **CI 로그 가져오기** — `gh run view` 로 실패 워크플로 직접 fetch 후 분석
+
+> "**코드 reading**" 만 하는 도구가 아니라 **"빌드·실행·관찰·디버깅"** 전 영역을 사람과 같은 방식으로 다룸 — 이게 force multiplier
+
+<!-- timing: 80 -->
+
+---
+
 # Pro vs Max 5x vs Max 20x — 어떻게 다른가
 
 <!-- TBD: 발표 당일 시점 공식 수치 재확인 -->
