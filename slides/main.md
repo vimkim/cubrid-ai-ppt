@@ -540,7 +540,7 @@ size: 16:9
 
 ---
 
-# 한계 — 네 가지 주의점
+# 한계 — 다섯 가지 주의점
 
 <!-- timing: 10 -->
 
@@ -618,6 +618,28 @@ size: 16:9
 <a href="https://www.axios.com/2026/04/04/ai-agents-burnout-addiction-claude-code-openclaw">Axios — AI Agents Burnout & Addiction</a> ·
 <a href="https://fortune.com/2026/03/10/ai-brain-fry-workplace-productivity-bcg-study/">Fortune — AI Brain Fry (BCG Study)</a>
 </span>
+
+---
+
+# 한계 5: AI 동조 (Sycophancy) — "맞지?" 에 무비판 OK
+
+**관찰된 패턴**
+
+- 사용자가 긍정적·단정적으로 표현하면 AI 가 그대로 따라가는 경향
+- 예: *"이 부분 이렇게 고치는 게 낫지 않아?"* → 안 좋아도 그대로 진행
+
+**대응 — 두 가지**
+
+- **질문 화법을 중의적으로**
+  - ❌ *"이렇게 고치는 게 낫지 않아?"* — 긍정 유도
+  - ✅ *"다른 좋은 방법이 있을까? 지금 방법이 최선이야?"* — 열린 질문
+- **`grill-me` 스킬** — AI 가 사용자를 거꾸로 *relentlessly* 심문하며 약점 발견
+  - **본 발표 자료도 `grill-me` 로 자기검증 중** — 슬라이드 흐름·모순·약점을 AI 가 먼저 지적
+  - 단점: 촌철살인이 강해 자존감 깎일 수 있음
+
+<span class="qualifier">동료 jyj 님 피드백에서 출발 — 본 발표 작성에 실제 적용</span>
+
+<!-- timing: 90 -->
 
 ---
 
