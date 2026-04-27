@@ -108,18 +108,16 @@ size: 16:9
 
 # 발표의 한계 2
 
-아쉽지만 AI Agent 시장은 Unstable하여 **예측 불가능**하다
+AI Agent 시장은 Unstable하여 **예측 불가능**하다 🎢🎢🎢
 
-대략적으로:
-- 6주 전: Claude Max 강력 추천
-- 5주 전: Claude Max 토큰 급속도 소모 오류 + Adaptive Thinking 논란
-- 4주 전: Codex 5.4 급부상 + 체감 상 토큰 무제한
-- 3주 전: Codex $100 요금제 출시
-- 2주 전: Claude 4.7 출시 후 성능 복구
-- 1주 전:  Claude Max 토큰 소모 오류 수정
-- 이번 주: Claude 토큰 소모 속도 다시 증가
+- 6주 전: Claude Max 강력 추천 🟢
+- 5주 전: Claude Max 토큰 급속도 소모 오류 + Adaptive Thinking 논란 🔴
+- 4주 전: Codex 5.4 급부상 + 체감 상 토큰 무제한 🔴
+- 3주 전: Codex $100 요금제 출시 🔴
+- 2주 전: Claude 4.7 출시 후 성능 복구 🟢
+- 1주 전:  Claude Max 토큰 소모 오류 수정 🟢
+- 이번 주: Claude 토큰 소모 속도 다시 증가 🔴
 
-다음 주에 또 무슨 일이 벌어질 지 모름
 이번 주에 내린 결정이 **다음 주에 트렌드에 뒤쳐짐**
 
 ---
