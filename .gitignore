@@ -5,6 +5,7 @@ build/
 .omc/state/
 .omc/logs/
 .omc/sessions/
+.omc/project-memory*
 
 # Editor / OS
 .DS_Store
