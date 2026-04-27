@@ -163,7 +163,7 @@ size: 16:9
   - 아키텍팅 능력 탁월 — 부분 패치보다 설계 수준 접근을 먼저 제안
   - 주변 코드 패턴 유지 → **수정량 적음**, 리뷰 부담 감소
 
-> 이 환경 미만에서는 본 발표 사례가 **그대로 재현되지 않을 수 있음**
+> 이 환경 미만 (예시: Claude Pro & Sonnet)에서는 본 발표 사례가 **그대로 재현되지 않을 수 있음**
 
 <!-- timing: 90 -->
 
@@ -234,8 +234,6 @@ size: 16:9
 
 - Claude 가 clangd LSP 를 직접 호출해 정의·참조·호출 계층을 자동으로 수집
 - 호출 체인 + 각 단계 역할 요약을 한 번에 확보
-
-<span class="qualifier">이 특정 경험에서의 결과</span>
 
 <!-- timing: 45 -->
 
@@ -623,10 +621,10 @@ size: 16:9
 
 # 한계 5: AI 동조 (Sycophancy) — "맞지?" 에 무비판 OK
 
-**관찰된 패턴**
 
 - 사용자가 긍정적·단정적으로 표현하면 AI 가 그대로 따라가는 경향
 - 예: *"이 부분 이렇게 고치는 게 낫지 않아?"* → 안 좋아도 그대로 진행
+> 익명의 jyj님 피드백
 
 **대응 — 두 가지**
 
@@ -634,10 +632,9 @@ size: 16:9
   - ❌ *"이렇게 고치는 게 낫지 않아?"* — 긍정 유도
   - ✅ *"다른 좋은 방법이 있을까? 지금 방법이 최선이야?"* — 열린 질문
 - **`grill-me` 스킬** — AI 가 사용자를 거꾸로 *relentlessly* 심문하며 약점 발견
-  - **본 발표 자료도 `grill-me` 로 자기검증 중** — 슬라이드 흐름·모순·약점을 AI 가 먼저 지적
+  - **본 발표 자료도 `grill-me` 로 무한 자기검증 중** — 슬라이드 흐름·모순·약점을 AI 가 먼저 지적
   - 단점: 촌철살인이 강해 자존감 깎일 수 있음
 
-<span class="qualifier">동료 jyj 님 피드백에서 출발 — 본 발표 작성에 실제 적용</span>
 
 <!-- timing: 90 -->
 
@@ -674,8 +671,6 @@ size: 16:9
 - "이 접근법이 heap_file.c 구조에서 동작할까?" 를 구현 전에 Claude와 먼저 확인하는 습관이 생겼음
 - Part 2의 **5시간 자율 작업 에피소드**도 이 흐름 변화의 연장선 (→ Part 2 참고)
 
-<span class="qualifier">개인 워크플로우에서의 변화. 모든 작업에 적용한 건 아님.</span>
-
 <!-- timing: 30 -->
 
 ---
@@ -687,17 +682,15 @@ size: 16:9
 - 구현을 시작하기 전에 작은 POC를 Claude에 요청해서 방향을 먼저 확인하는 방식으로 바뀌었음
 - "이런 구조가 가능한가?"를 코드로 빠르게 확인하고, 막히면 방향을 틀었음
 
-<br>
-
-<span class="qualifier">개인 경험에서의 변화</span>
-
-- 큰 구현을 시작하기 전에 작은 탐색을 먼저 하는 것이 시간을 아끼는 경우가 있었음
-
 <!-- timing: 80 -->
 
 ---
 
-# 조심스럽게 예측해보는 개발 프로세스의 변화
+# 개발 프로세스의 변화 예상
+
+- SDD
+- SSOT
+- TDD
 
 <!-- timing: 10 -->
 
@@ -709,27 +702,104 @@ size: 16:9
 
 - AI와 협업할 때 요구사항을 먼저 명확히 적어두면 결과 품질이 올라가는 걸 체감했음
 - "무엇을 만들어야 하는가"를 글로 정리하는 것이 AI 지시에 더 효과적
-- "요구사항을 먼저 글로 쓰는 것"이 AI 활용 ROI를 높이는 데 도움이 됐다는 경험 공유
+- "요구사항을 먼저 글로 쓰는 것"이 AI 사용에 유리
 
 <!-- timing: 45 -->
 
 ---
 
-# SDD 의 핵심 — SSOT 와 JIRA 이슈
+# SSOT — 왜 SDD 의 핵심인가
 
-**SSOT (Single Source of Truth) 를 만드는 것이 중요**
+> **SSOT (Single Source of Truth, 단일 진실 공급 원천)** — 같은 정보(요구사항·스펙·설계 결정)에 대해 **권위 있는 단일 출처**를 두는 원칙. 코드·문서·이슈·메모에 흩어져 있던 진실을 한 곳으로 모아 모든 작업이 그곳을 참조하도록 함.
 
-- 스펙이 여러 곳에 흩어져 있으면 AI 도 사람도 혼란 — 단일 원본이 있어야 함
-- **JIRA 이슈를 최대한 자세히 작성**하는 것이 중요 — JIRA 이슈 자체가 SSOT 역할
-- 배경, 목적, 요구사항, 예상 동작, 예외 케이스까지 글로 남길수록 재사용 가치가 올라감
+**왜 핵심인가**
+
+- **분산되면 모순이 누적** — 스펙이 코드 주석·JIRA·Slack·머릿속에 흩어지면 사람도 AI 도 *어느 게 진실인지* 모름
+- **AI 출력의 일관성은 입력의 일관성에서 나옴** — SSOT 가 명확할수록 AI 결과 품질·재현성 ↑
+- **변경·리뷰·온보딩 비용 절감** — "어디부터 봐야 하나" 문제가 즉시 해결됨
+
+**SDD 와의 연결**
+
+- SDD 의 spec 자체가 SSOT — 모든 구현·테스트·이슈·PR 이 SSOT 를 참조
+- SSOT 가 없는 SDD 는 *"여러 spec 이 따로 도는 SDD"* 로 변질 → 시간이 지나면서 분산
+
+<!-- timing: 75 -->
+
+---
+
+# 실제 일화 — OOS 프로젝트의 stale JIRA
+
+**SSOT 가 분산되면 AI 가 잘못된 진실을 신뢰함**
+
+- OOS 기능 개발 중 **스펙을 변경**하고 새 스펙대로 진행하기로 결정
+- 하지만 **JIRA 이슈는 옛 스펙 그대로 미업데이트 상태**로 남아 있었음
+- AI 에게 작업을 맡기자 → **오래된 JIRA 티켓을 SSOT 로 신뢰해 옛 스펙 고집**
+- 새 스펙으로 안내해도 다시 JIRA 를 인용하며 옛 스펙으로 회귀
+
+**교훈**
+
+- "어디가 진실인가" 가 흐려지면 **AI 도 사람도 같이 헤맴**
+- JIRA 처럼 **사람이 잊고 업데이트 안 하기 쉬운 매체**를 SSOT 로 두면 위험
+- → **MD SSOT 한 곳에서 JIRA 가 자동 갱신**되어야 stale 문제 사라짐
+
+<!-- timing: 90 -->
+
+---
+
+# SDD 의 핵심 — MD 가 SSOT, JIRA·PR 은 자동 생성
+
+**SSOT 포맷 선택은 AI 친화성을 먼저 고려해야 함**
+
+- JIRA / Confluence 문법은 **AI 비친화적** — 변환·왕복 손실이 크고 AI 가 직접 읽고 쓰기 어려움
+- AI 가 다루기 힘든 포맷을 SSOT 로 두면 마찰만 누적 → **마크다운이 가장 AI 친화적인 SSOT**
+
+**실제로 자리잡은 패턴 — MD 파일이 SSOT**
+
+- 배경·목적·요구사항·예상 동작·예외 케이스를 **모두 마크다운으로 관리**
+- MD 가 충분히 자세하면 **JIRA 이슈 본문 + PR description 을 AI 가 자동 생성**
+- JIRA·PR 은 트래킹 인터페이스로만 사용 — **진실은 항상 MD 에**
 
 **앞으로의 방향성**
 
-- Claude Code 가 **JIRA 이슈를 직접 읽고 구현을 자동 수행**하는 흐름으로 갈 것으로 예상
-- 이슈 작성에 들이는 시간이 **곧 구현 품질** 로 환산되는 구조
-- "잘 쓴 이슈 = 잘 구현된 코드" 의 연결이 더 강해짐
+- Claude Code 가 **MD SSOT 를 읽고 구현 자동 수행** + JIRA 본문·PR description 자동 게시
+- "잘 쓴 MD = 잘 구현된 코드 + 자동 생성된 이슈/PR" 의 연결이 강해짐
 
-<!-- timing: 75 -->
+<!-- timing: 90 -->
+
+---
+
+# SSOT 에서 모든 산출물이 자동 동기화
+
+**MD SSOT 가 진실, 그 외는 자동 생성·갱신되는 부산물**
+
+<div style="text-align: center; margin: 1em 0;">
+
+<div style="display: inline-block; padding: 0.6em 1.5em; background: #2d4a8a; color: white; border-radius: 8px; font-weight: bold; font-size: 1.05em;">
+📄 MD SSOT (spec.md) — 진실
+</div>
+
+<div style="margin: 0.4em 0; color: #888;">↓ AI 자동 동기화 ↓</div>
+
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5em; max-width: 90%; margin: 0 auto;">
+<div style="padding: 0.5em; background: #eef; border: 1px solid #99c; border-radius: 4px;">Code</div>
+<div style="padding: 0.5em; background: #eef; border: 1px solid #99c; border-radius: 4px;">Code Comment</div>
+<div style="padding: 0.5em; background: #eef; border: 1px solid #99c; border-radius: 4px;">Tests / TC</div>
+<div style="padding: 0.5em; background: #eef; border: 1px solid #99c; border-radius: 4px;">JIRA Ticket</div>
+<div style="padding: 0.5em; background: #eef; border: 1px solid #99c; border-radius: 4px;">PR Description</div>
+<div style="padding: 0.5em; background: #eef; border: 1px solid #99c; border-radius: 4px;">내부 문서</div>
+<div style="padding: 0.5em; background: #eef; border: 1px solid #99c; border-radius: 4px;">매뉴얼</div>
+<div style="padding: 0.5em; background: #eef; border: 1px solid #99c; border-radius: 4px;">--help 메시지</div>
+</div>
+
+</div>
+
+**핵심 동작**
+
+- **SSOT 와 다른 내용** 이 발견되면 → AI 가 SSOT 기준으로 **자동 수정**
+- 진실이 바뀌면 **MD 한 곳만** 고치면 나머지는 따라옴
+- 사람이 모든 산출물을 수동 동기화하지 않음 → **일관성 유지 비용 ↓**
+
+<!-- timing: 90 -->
 
 ---
 
@@ -737,26 +807,28 @@ size: 16:9
 
 **실패하는 테스트를 먼저 작성하고, 그 테스트를 통과시키도록 구현하는 개발 방식**
 
-- 테스트를 먼저 쓰면 AI가 그 테스트를 통과하는 구현을 맞춰 생성하는 방식이 잘 동작했음
-- 검증 기준이 먼저 있으면 AI 출력의 품질 판단이 쉬워졌음
+- 테스트를 먼저 쓰면 AI가 그 테스트를 통과하는 구현을 맞춰 생성하는 방식이 잘 동작
+- 검증 기준이 먼저 있으면 AI 출력의 품질 판단이 쉬움
 <!-- timing: 60 -->
 
 ---
 
-# AI 친화 = 사람 친화 — 암묵지를 글로 내려놔라
+# AI 친화 == 사람 친화: 암묵지를 없애자
 
-**신규 입사자와 AI 는 같은 입장에서 프로젝트를 바라봄**
+> **암묵지 (暗默知, Tacit Knowledge)** — 개인의 경험·노하우·직관처럼 말이나 글로 명확히 표현하기 어려운 잠재적 지식. 문서화 가능한 **형식지 (形式知, Explicit Knowledge)** 와 대비. 보통 도제·멘토링으로 전수되는 현장 숙련(know-how) 이 핵심.
+
+**AI와 신규 입사자는 같은 입장에서 CUBRID를 바라봄**
 
 - AI 효율을 위해 정리한 문서·스크립트는 **신규 입사자 온보딩 그대로 가속**
 - 반대도 성립 — **Win-win** 구조, 한쪽 투자가 양쪽을 돕는 구조
 
 **예시 — 명시화할 가치가 있는 암묵지**
 
-- `ctp.sh --help`, `README`, 빌드 스크립트 주석 — AI 가 먼저 읽고 업무 파악
-- 트러블슈팅: "서버가 갑자기 죽으면 `$CUBRID/log/server/<db>_stdout.log` 부터" 같은 지식
-- 머릿속에만 있는 암묵지는 AI 가 접근 불가 → 글로 내려놔야 **AI·신입·기존 개발자 모두 같이 빨라짐**
+- 명시적 가이드: `ctp.sh --help`, `README`, 빌드 스크립트 주석 — AI 가 자동으로 읽고 업무 파악
+- 묵시적 트러블슈팅: "서버가 갑자기 죽으면 `$CUBRID/log/server/<db>_stdout.log` 부터" 같은 지식
+- 머릿속에만 있는 암묵지는 AI 가 접근 불가 → 모두 명시해야 **AI·신입·기존 개발자 모두 같이 빨라짐**
 
-<!-- timing: 90 -->
+<!-- timing: 110 -->
 
 ---
 
@@ -766,7 +838,7 @@ size: 16:9
 
 - 빌드 → DB 구동 → 예제 실행 → coredump 분석 → GDB attach 까지 가능해야 진짜 agent
 - 단순 코드 reading 만으로는 가설 검증 불가 → 추측에 머무름
-- 빌드·테스트·외부 호출이 **멈춰도 AI 는 계속 기다림** — 가장 비싼 비용
+- 빌드·테스트·외부 호출이 **멈춰도 AI 는 계속 기다림** — 가장 비싼 비용 **"시간 낭비"**
 
 **대응 — 헛수고 방지 3단계**
 
@@ -808,7 +880,7 @@ size: 16:9
 **① Git 일상 흐름 자동화**
 
 - `git stage → add → commit → push` 한 번에 — 변경 분석으로 **커밋 메시지 자동 작성**
-- 팀 컨벤션(prefix, JIRA 키, 영문/한글 요약)을 학습시켜 **일관된 메시지 품질**
+- 팀 컨벤션(prefix, JIRA 키, 영문/한글 요약)을 **자동 학습하여 일관된 메시지 품질**
 
 **② Git Merge Conflict 해결 — 컨텍스트 기반**
 
@@ -819,7 +891,7 @@ size: 16:9
 **③ gh CLI / API 자동화**
 
 - PR 생성·draft 전환, **리뷰어 자동 등록·re-request**, 댓글·대댓글, 머지 후 정리
-- **Greptile 봇 응답 일괄 처리** — 이미 발표자 운영 중 (skill 화)
+- **Greptile 봇 응답 일괄 개별 처리**
 - PR 리뷰 후 코멘트 자동 게시 등 **반복 GitHub 업무 전반**
 
 <!-- timing: 75 -->
@@ -832,7 +904,7 @@ size: 16:9
 
 - **CBRD-XXXXX 다운로드** → JIRA grammar 를 **마크다운으로 변환** → AI 가 읽기 쉬운 형태로 보관
 - AI 와 작성한 **마크다운을 JIRA grammar 로 역변환** → API 로 이슈 본문 직접 업데이트
-- 이슈 검색·코멘트 추가·status 전환까지 자동화 가능 → **JIRA 가 SSOT 로 작동하는 SDD 흐름과 연결**
+- 이슈 검색·코멘트 추가·status 전환까지 자동화 가능 → **MD SSOT 에서 JIRA·PR 자동 생성하는 SDD 흐름과 연결**
 
 **왜 이 4가지를 우선 후보로 꼽았는가**
 
