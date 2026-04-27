@@ -755,6 +755,26 @@ claude "이 diff 기반으로 PR description 작성해줘"
 
 ---
 
+# All-in-one 플러그인 — 초심자에게 추천
+
+**처음부터 skill 을 직접 만들 필요 없음 — 잘 만들어진 플러그인 위에서 시작**
+
+- **oh-my-claudecode (omc)** — multi-agent orchestration, 50+ skill 묶음 (`/autopilot`, `/ralph`, `/team`, `/deep-interview` 등)
+- **superpowers** — 개발 워크플로 자동화 skill 모음 (TDD, refactoring, git 흐름)
+- **serena** — 시맨틱 코드 분석·탐색 MCP 서버 (LSP 기반, 거대 코드베이스 친화)
+
+**왜 플러그인부터 시작하면 좋은가**
+
+- "내가 뭘 자동화할 수 있는지" 를 **선행 사례로 학습** — 시야가 넓어짐
+- 각 플러그인이 **현장에서 검증된 패턴** 을 담고 있음 → 시행착오 단축
+- 익숙해지면 **자기 워크플로에 맞춰 fork·수정·삭제** 하면 됨
+
+<span class="qualifier">단, 플러그인이 많아지면 컨텍스트 오염·skill 충돌 발생 — 익숙해진 뒤 정리 필수</span>
+
+<!-- timing: 75 -->
+
+---
+
 # Skill — "가장 개인적인 것이 가장 창의적이다"
 
 **Skill** = 반복 수행할 작업 절차를 재사용 가능한 형태로 저장해둔 Claude Code 확장 기능
