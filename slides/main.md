@@ -125,13 +125,12 @@ AI Agent 시장은 Unstable하여 **예측 불가능**하다 🎢🎢🎢
 # 발표하게 된 배경
 
 1. 써보니 **Claude Code Max + Opus 4.7 (1M Context)** (최소 16만원)의 성능이 예상보다 좋다
-  - 많은 잡무를 자동화할 수 있다
-  - 업무 자동화 경험을 동료 개발자들에게 공유하고 싶다
+    - 많은 잡무를 자동화할 수 있다
+    - 업무 자동화 경험을 동료 개발자들에게 공유하고 싶다
 2. 더 많은 개발자들이 **Claude Max with Opus 4.7 (1M Context)** 에 관심을 가졌으면 좋겠다
-  - 실제로 연구개발본부 내 점점 더 **Claude Max 사용자**들이 늘어나고 있음
+    - 사내 **Claude Max 사용자**들이 늘어나고 있음
 3. **회사 전체 생산성에 기여**하고 싶음
 <!-- timing: 40 -->
-
 ---
 
 # Claude Code란? (1분 개요)
@@ -148,7 +147,6 @@ AI Agent 시장은 Unstable하여 **예측 불가능**하다 🎢🎢🎢
 ```
 [ Claude 모델 ] ←→ [ 로컬 파일 접근 ] + [ 도구 실행 (shell, read, write) ]
 ```
-
 <!-- timing: 50 -->
 
 ---
@@ -184,13 +182,12 @@ AI Agent 시장은 Unstable하여 **예측 불가능**하다 🎢🎢🎢
 - **Valgrind / sanitizer 결과 해석** — 메모리 leak·undefined behavior 진단
 - **CI 로그 가져오기** — `gh run view` 로 실패 워크플로 직접 fetch 후 분석
 
-> "**코드 reading**" 만 하는 도구가 아니라 **"빌드·실행·관찰·디버깅"** 전 영역을 사람과 같은 방식으로 다룸 — 이게 force multiplier
-
+> "**코드 reading**" 만 하는 도구가 아니라 **"빌드·실행·관찰·디버깅"** 전 영역을 사람과 같은 방식으로 다룸
 <!-- timing: 80 -->
 
 ---
 
-# Pro vs Max 5x vs Max 20x — 어떻게 다른가
+# Pro / Max 5x / Max 20x — 어떻게 다른가
 
 <!-- TBD: 발표 당일 시점 공식 수치 재확인 -->
 
@@ -202,37 +199,33 @@ AI Agent 시장은 Unstable하여 **예측 불가능**하다 🎢🎢🎢
 
 <br>
 
-<span class="qualifier">수치는 발표 당일 공식 페이지 기준으로 재확인 예정 — 변동 가능</span>
-
-- **Pro 는 주로 Sonnet 모델 사용** — 컨텍스트가 작고 체감 성능이 낮아 **CUBRID 개발에는 도움이 거의 안 됐음**
-- 대규모 코드베이스를 긴 대화로 탐색할 때 Pro 사용량 한도도 금방 소진됐음
-- **이 경험이 Max 로 넘어간 계기**
+- **Pro 는 기본적으로 Sonnet 모델 사용**
+    - Sonnet는 컨텍스트가 작음: CUBRID 함수 재사용 못하고 **불필요 코드 양산**
+    - Opus는 보통 10분 ~ 1시간 안에 토큰 고갈
+- 업무 난이도가 조금 올라가면 **Claude Max + Opus 4.7 1M Context** 가 꼭 필요함
 
 <!-- timing: 60 -->
 
 ---
 
-# Max 20x — 왜 Pro 대신 Max 인가
+# 주의사항: Opus vs. Opus 1M Context 는 다르다
+
+Pro 구독에서는 Opus 1M Context를 사용할 수 없음
+
+---
+
+# 왜 Sonnet 대신 Opus 1M Context 인가?
 
 <!-- timing: 90 -->
-
-**2개월 실사용 기준 개인 관찰 — 모델 버전에 따라 언제든 바뀔 수 있음**
 
 - **컨텍스트를 훨씬 많이 가져감** — Pro 대비 주변 파일·코드 탐색 범위가 넓음. 긴 대화에서 흐름이 끊기지 않음
 - **아키텍팅 능력 탁월** — 다른 AI 도구 대비 전체 구조를 먼저 그림. 부분 패치보다 설계 수준의 접근을 먼저 제안
 - **주변 코드와 유사한 패턴 유지** — 이상한 스타일·패턴이 섞이지 않음. 기존 코드베이스 관용어를 따름
 - **수정량이 적음** — 출력이 기존 패턴에 가까워서 리뷰·수정 부담이 줄었음
-- **리뷰 편의성** — 제 경험상 타사 AI 도구 대비 저한테는 리뷰가 수월했음 (개인적 의견)
-
-<div class="caveat">2개월 시점 개인 경험, 모델 버전에 따라 언제든 바뀔 수 있음</div>
-
-<br>
-
-<span style="color:#888; font-size:0.9em;">코드리뷰는 여전히 힘들다. 개발 2팀 팀원들에게 미안한 마음.</span>
 
 ---
 
-# Max 20x vs API — 가성비 비교
+# Max 20x vs. API — 가성비 비교
 
 <!-- TBD: 발표 당일 시점 API 토큰 단가 및 Max 플랜 가격 재확인 (2026-04 기준) -->
 
@@ -246,15 +239,13 @@ AI Agent 시장은 Unstable하여 **예측 불가능**하다 🎢🎢🎢
 
 **실제 사례 (외부 개발자):** 8개월 간 100억 토큰 사용 — API 환산 $15,000 → Max 실제 지출 $800 (**94% 절감**)
 
-저 역시 하루 수시간 긴 대화를 반복하는 패턴이어서, API로 했다면 몇 배 이상 지출 예상
-
 <div class="qualifier" style="font-size:0.75em; line-height:1.5;">
 참고:
 <a href="https://levelup.gitconnected.com/why-i-stopped-paying-api-bills-and-saved-36x-on-claude-the-math-will-shock-you-46454323346c">Save 36x on Cost</a> ·
 <a href="https://help.apiyi.com/en/claude-max-vs-api-pay-per-use-pricing-comparison-claude-code-savings-guide-en.html">Save 94% in Costs</a> ·
 <a href="https://www.productcompass.pm/p/claude-code-pricing">Claude Code Pricing 분석</a>
 <br>
-2026-04 시점 기준, 발표 당일 재확인
+2026-04 시점 기준
 </div>
 
 <!-- timing: 70 -->
@@ -263,15 +254,11 @@ AI Agent 시장은 Unstable하여 **예측 불가능**하다 🎢🎢🎢
 
 # 만능은 아니다
 
-**Disclaimer**
-
 - **컨텍스트 한계**: 전체 코드베이스를 한 번에 다 기억하지 못함. 관련 파일을 자동 탐색하지만, 매우 큰 세션에서는 `/compact` 또는 세션 분리가 필요.
 - **검증은 개발자 몫**: 출력은 초안. 빌드/테스트/리뷰는 여전히 필요.
-- **만능 아님**: 작업 범위를 스스로 축소하려는 경향, 토큰 소모 많음, 느린 응답 대기.
+- **게으름 (토큰 절감 시도)**: 작업 범위를 스스로 축소하려는 경향, 토큰 소모 많음, 느린 응답 대기.
 
 <br>
-
-> 이 전제 위에서 2개월 이야기를 시작합니다.
 
 <!-- timing: 50 -->
 
