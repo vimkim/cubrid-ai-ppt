@@ -155,3 +155,25 @@ size: 16:9
 - 성능 크리티컬 영역은 여전히 사람이 직접 튜닝 중
 
 <!-- timing: backup -->
+
+---
+
+# Q&A
+
+**모르는 건 솔직하게 답변드리겠습니다.**
+
+<br>
+
+<!-- timing: 10 -->
+
+---
+
+# 감사합니다
+
+**Claude Code Max 2개월 사용 경험 공유**
+
+<br>
+
+김대현 · 개발 2팀 & AI TFT · kimdhyungg@gmail.com
+
+<!-- timing: 10 -->

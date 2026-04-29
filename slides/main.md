@@ -477,6 +477,48 @@ size: 16:9
 
 ---
 
+# Greptile 봇 + gh CLI 자동화 — 일괄 코멘트 처리
+
+**Scenario**: PR 에 Greptile 봇이 다수 리뷰 코멘트를 남김. 일일이 처리하면 시간 소모.
+
+**Before**
+
+- 코멘트 하나씩 클릭 → 코드 확인 → 응답 작성 → 게시 → 다음 코멘트
+- 봇 코멘트 10개면 같은 흐름 10번 반복
+
+**After**
+
+- `gh api` 로 PR 코멘트 일괄 fetch → Claude 가 코멘트별 응답 초안 생성
+- 검토 후 `gh api ... /replies` 로 일괄 게시 — `resolve-greptile-comments` skill 화 완료
+- PR 리뷰 코멘트 응답·thread resolve 까지 같은 워크플로
+
+<span class="qualifier">현재 skill 로 운영 중. 응답은 검토 후 게시 — 사람의 눈은 여전히 필요</span>
+
+<!-- timing: 50 -->
+
+---
+
+# JIRA REST API 연동 — CBRD 이슈 양방향 자동화
+
+**Scenario**: CBRD 이슈를 매번 웹 UI 에서 다운로드/업로드하기 번거로움. JIRA grammar 변환도 손이 많이 감.
+
+**Before**
+
+- 웹 UI 에서 이슈 본문 수동 복사 → 마크다운으로 정리 → 다시 JIRA grammar 로 수동 변환
+- 컨텍스트 스위칭 비용 높음
+
+**After**
+
+- REST API 로 CBRD-XXXXX 자동 다운로드 → pandoc 으로 JIRA → 마크다운 변환 → AI 가 다루기 쉬운 형태로 보관
+- AI 가 작성한 마크다운을 JIRA grammar 로 역변환 → API 로 본문 직접 업데이트
+- `/jira CBRD-XXXXX` skill 한 줄로 풀 컨텍스트 fetch — 운영 중
+
+<span class="qualifier">"MD SSOT → JIRA · PR 자동 동기화" SDD 흐름의 실제 구현체</span>
+
+<!-- timing: 60 -->
+
+---
+
 # 발표 자료 생성 자동화 — 이 발표 자체가 사례
 
 > **본 발표자료는 모두 Claude Code 와의 대화 방식으로 생성됨**
@@ -1015,7 +1057,9 @@ size: 16:9
 
 ---
 
-# 업무 자동화 후보 — Git / GitHub 영역
+# 업무 자동화 후보 — Git 흐름 영역
+
+**아직 skill 화하지 못한 것 — 곧 가능해질 영역**
 
 **① Git 일상 흐름 자동화**
 
@@ -1028,32 +1072,9 @@ size: 16:9
 - 단순 `--ours` / `--theirs` 보다 **세분화된 conflict 해결 정책** 적용 가능
 - 충돌 패턴이 반복되면 skill 로 굳혀 매번 사람이 일일이 풀 필요 없어짐
 
-**③ gh CLI / API 자동화**
+> gh CLI / JIRA REST API 연동은 **이미 성공담 (Part 3 참조)** — Git 영역만 남은 셈
 
-- PR 생성·draft 전환, **리뷰어 자동 등록·re-request**, 댓글·대댓글, 머지 후 정리
-- **Greptile 봇 응답 일괄 개별 처리**
-- PR 리뷰 후 코멘트 자동 게시 등 **반복 GitHub 업무 전반**
-
-<!-- timing: 75 -->
-
----
-
-# 연구개발본부 업무 자동화 후보 — JIRA / 문서 영역
-
-**④ JIRA REST API 연동 — CBRD 이슈 양방향 자동화**
-
-- **CBRD-XXXXX 다운로드** → JIRA grammar 를 마크다운으로 변환 → AI 가 다루기 쉬운 형태로 보관
-- AI 가 작성한 **마크다운을 JIRA grammar 로 역변환** → API 로 이슈 본문 직접 업데이트
-- 이슈 검색·코멘트·status 전환 자동화 → **MD SSOT → JIRA·PR 자동 생성하는 SDD 흐름과 연결**
-
-**왜 이 4가지를 우선 후보로 꼽았는가**
-
-- 매일 반복되는 작업 → ROI 즉시 눈에 보임
-- 협업 인터페이스 (git/PR/JIRA) → 팀 단위 효과 증폭, 한 번 skill 화하면 본부 전체 공유
-
-<span class="qualifier">발표자 현재 운영 — Greptile·PR 리뷰·JIRA 이슈 작성 보조까지 skill 화, 나머지는 발전 중</span>
-
-<!-- timing: 75 -->
+<!-- timing: 60 -->
 
 ---
 
@@ -1123,6 +1144,41 @@ claude "이 diff 기반으로 PR description 작성해줘"
 
 ---
 
+# 발표자의 CUBRID 전용 skill 모음 — 실제 사례
+
+**`vimkim/my-cubrid-skills`** — CUBRID 작업에 특화된 개인 skill 저장소
+<https://github.com/vimkim/my-cubrid-skills>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5em; text-align: left; margin-top: 0.6em;">
+
+<div>
+
+**`/jira CBRD-12345`**
+
+- CUBRID JIRA 이슈를 한 줄로 fetch
+- REST API + pandoc 으로 본문/코멘트/링크 이슈를 마크다운 변환
+- AI 가 즉시 컨텍스트로 활용 가능
+
+</div>
+
+<div>
+
+**`/cubrid-pr-create`**
+
+- 현재 브랜치 변경사항 분석 → **draft PR 자동 생성**
+- `[CBRD-XXXXX]` 제목 컨벤션 + 한국어 본문 + 영어 섹션 헤더
+- 팀 PR 규칙을 skill 한 곳에 박제
+
+</div>
+
+</div>
+
+<span class="qualifier">"남이 대신 만들어 줄 수 없는 부분" 의 실제 예시 — CUBRID 팀 컨벤션은 본인이 만들어야 함</span>
+
+<!-- timing: 75 -->
+
+---
+
 # 자동화 자동화 — skill → script → plugin
 
 **4단계 진화 — 시행착오 자체를 자산으로**
@@ -1157,27 +1213,25 @@ claude "이 diff 기반으로 PR description 작성해줘"
 
 ---
 
-# Q&A
+# 결론 — 마차에서 자율주행까지
 
-**모르는 건 솔직하게 답변드리겠습니다.**
+**두 가지 자세를 동시에 가져갈 것**
 
-<br>
-
-<!-- timing: 10 -->
-
----
-
-# 감사합니다
-
-**Claude Code Max 2개월 사용 경험 공유**
+- **지금 가능한 것은 최대한 자동화** — AI 로 풀리는 영역에 빨리 익숙해지기
+- **불편한 영역은 곧 풀린다** — 사람이 시간과 노력을 들이면 자동화 가능 영역으로 편입됨
 
 <br>
 
-자주 물어보시는 내용은 다음 슬라이드(FAQ)에 미리 준비했습니다.
+> **"마차에서 자동차로 변화했듯이, 개발자에게는 Claude Code Max 가 역사적인 전환입니다.<br>
+> 말을 끌고 다니다가 한 번에 자율주행까지 도달한 느낌입니다."**
+>
+> — 익명의 rhg 님
 
-김대현 · 개발 2팀 & AI TFT · kimdhyungg@gmail.com
+<br>
 
-<!-- timing: 10 -->
+<span class="qualifier">변화는 이미 일어나고 있고, 우리가 할 일은 마부가 아니라 운전자가 되는 것</span>
+
+<!-- timing: 60 -->
 
 ---
 
