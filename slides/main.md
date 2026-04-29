@@ -22,9 +22,11 @@ size: 16:9
 # 발표자 소개
 
 - **김대현** · 개발 2팀 & AI TFT
+- TFT 업무: AI Agent (Open Code, OMC, OMO) 소스코드 분석
 - **2개월간 매일 사용** — Claude Code Max 20x (Opus 4.7 1M Context)
 - 보조: OpenAI Codex, Grok
-- **참여 중인 스터디**
+- **참여 스터디**
+  - Claude Code 소스코드 분석 스터디
   - Claude Code 플러그인 개발 스터디
   - 고독한 토큰털이 스터디 (토큰 100% 소모 인증)
 - **돈과 시간을 들여 2개월 이상 직접 부딪혀 본** 사용자의 관점에서 공유
@@ -58,12 +60,13 @@ size: 16:9
 ## Pros
 
 - 개발팀 반복 업무의 **큰 비중을 부분 자동화 가능**
-- Claude Code에서 떠나지 않고 모든 업무를 처리 가능
+- Claude Code에서 대부분의 업무를 처리 가능
+  - jira, ppt, github, vscode 등 모두 포함
 
 ## Cons
 
-— TC 검증·디렉션은 사람 몫
 - 생산성은 **경험 혹은 경력**에 비례할 것이다 - AI가 사용자에게 끊임없이 디렉션을 요구하기 때문
+- 복잡한 TC 검증·디렉션은 사람 몫
 - 고급 업무를 위해서는 팀 단위로 **Knowledge Base** 구축이 필요하다
 - 체감 상 Claude Max Opus 4.7 1M 한정 - (16만원 이상 😢😢)
 
@@ -77,7 +80,7 @@ size: 16:9
 
 **✅ 성공한 영역 — 검증 루프가 명확**
 
-- **Code POC 작성** — "이 접근법 가능한가?" 빠른 확인
+- **Code POC 작성** — "우선 돌아가는가?" 빠른 확인
 - **버그 수정** — 빌드·테스트 루프로 즉시 검증
 - **JIRA 이슈 작성** — 코드 변경 기반 초안
 - **PR description 작성** — diff 기반 자동 정리
@@ -99,8 +102,6 @@ size: 16:9
 </div>
 
 </div>
-
-> **핵심 패턴** — *"피드백 루프가 닫히면 자동화 성공, 닫히지 않으면 실패."* AI 의 강점·약점을 가르는 단일 기준.
 
 <!-- timing: 80 -->
 
@@ -132,7 +133,7 @@ size: 16:9
 
 </div>
 
-> AI Agent 시장은 매주 변동 — **이번 주의 모델·플랜이 다음 주에 바뀔 수 있음.** 모델 이름보다 **워크플로 패턴**에 주목해 주십시오.
+> AI Agent 시장은 매주 변동
 
 <!-- timing: 50 -->
 
@@ -187,11 +188,55 @@ size: 16:9
 
 ---
 
+# "이렇게 강한 권한, 위험하지 않나?"
+
+**자연스러운 우려 — 파일 쓰기 + 임의 명령 + 백그라운드 실행**
+
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5em; margin: 0.5em 0; font-size: 0.82em;">
+
+<div style="padding: 0.6em; background: #eef4ff; border: 2px solid #4a80c0; border-radius: 8px;">
+<b>🔒 Permission Mode</b>
+<small>매 도구 호출마다 사용자 확인 (default) / acceptEdits / plan / bypass — 위험도에 따라 단계적 권한 부여</small>
+</div>
+
+<div style="padding: 0.6em; background: #eef4ff; border: 2px solid #4a80c0; border-radius: 8px;">
+<b>🌳 Bash Tree-sitter 파싱</b>
+<small>실행 전 명령을 AST 단위로 분해해 위험 패턴 탐지 — `rm -rf /` 류는 자동 차단·경고</small>
+</div>
+
+<div style="padding: 0.6em; background: #eef4ff; border: 2px solid #4a80c0; border-radius: 8px;">
+<b>🪝 Hook 시스템</b>
+<small>PreToolUse / PostToolUse hook 으로 도구 호출 가로채기 — 팀 정책 강제, 감사 로그</small>
+</div>
+
+<div style="padding: 0.6em; background: #eef4ff; border: 2px solid #4a80c0; border-radius: 8px;">
+<b>📋 Plan / Auto Mode</b>
+<small>실행 전 계획 검토 단계 / Auto mode 의 destructive 가드 — 데이터 삭제·공유 시스템 변경은 확인 필수</small>
+</div>
+
+<div style="padding: 0.6em; background: #eef4ff; border: 2px solid #4a80c0; border-radius: 8px;">
+<b>🐳 Sandbox / Worktree</b>
+<small>git worktree 격리·devcontainer·DangerouslySkipPermissions 컨테이너 등 격리 실행 옵션</small>
+</div>
+
+<div style="padding: 0.6em; background: #eef4ff; border: 2px solid #4a80c0; border-radius: 8px;">
+<b>⚙️ Settings.json 권한</b>
+<small><code>allow</code> / <code>deny</code> / <code>ask</code> 리스트 — 도구·명령·MCP 단위로 세분화된 화이트/블랙리스트</small>
+</div>
+
+</div>
+
+<div class="caveat">보안·거버넌스 영역만으로 별도 발표 한 번 분량 — <b>본 발표 범위에서는 제외</b>, 관심 있으시면 별도 자리에서 공유 드릴 수 있습니다.</div>
+
+<!-- timing: 60 -->
+
+---
+
 # Claude Code × CUBRID — 진짜 개발자처럼 일한다
 
 **Claude 가 CUBRID repo 에서 실제로 할 수 있는 일들**
 
-- **빌드** — `cmake` / `make` 호출, 에러 로그 분석, 의존성 자동 설치
+- **코드 수정 후 빌드 무한 반복** — `cmake` / `make` 호출, 에러 로그 분석, 의존성 자동 설치
 - **DB 인스턴스 운영** — `cubrid server start/stop`, demodb 준비, csql 실행
 - **SQL / 예제 실행** — 테스트 시나리오를 직접 굴려보며 가설 검증
 - **clangd LSP 호출** — 함수 정의·참조·호출 계층을 코드 전체에서 자동 추적
@@ -275,17 +320,18 @@ size: 16:9
 
 # heap_file.c 레코드 삽입 흐름 파악
 
-**Scenario**: OOS 기능 개발 중 `heap_insert_logical` → `heap_insert_physical` 호출 체인을 이해해야 했음.
+**Scenario**: 기능 개발 중 `heap_insert_logical` → `heap_insert_physical` 호출 체인을 이해해야 했음.
 
 **Before**
 
-- clangd LSP 로 함수 호출 체인을 하나씩 따라가며 수동 탐색
+- IDE, gdb로 함수 호출 체인을 하나씩 따라가며 수동 탐색
 - `heap_file.c` 가 15,000줄 이상 — 맥락을 따라가다 자주 잃었음
 
 **After**
 
 - Claude 가 clangd LSP 를 직접 호출해 정의·참조·호출 계층을 자동으로 수집
-- 호출 체인 + 각 단계 역할 요약을 한 번에 확보
+- Claude 가 gdb ex mode 로 직접 콜스택 분석
+- 호출 체인 + 각 단계 역할 요약을 한 번에 확보 -> 분석서 작성
 
 <!-- timing: 45 -->
 
