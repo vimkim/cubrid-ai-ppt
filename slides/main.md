@@ -355,7 +355,7 @@ size: 16:9
 
 ---
 
-# 탐색 영역 — 이런 것도 했습니다
+# 코드 탐색
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; text-align: left;">
 
@@ -408,25 +408,22 @@ size: 16:9
 
 - Claude에 실패 로그 + 테스트 스크립트를 읽히고 분석 요청 → 근본 원인 파악
 
-<span class="qualifier">이 특정 경험에서의 결과</span>
-
 <!-- timing: 45 -->
 
 ---
 
-# 개발 영역 — 이런 것도 했습니다
+# AI 개발 - POC 생성
+
+> vector type을 추가해줘.
+
+> vacuum 에서 OOS 값을 비동기적으로 삭제하도록 지원해줘.
+
+> 내가 짠 코드의 unit test를 만들어줘.
+> CS_MODE, SA_MODE, SERVER_MODE 용 유닛테스트를 다 만들어줘.
+> sql test, shell test, isolation test 작성해줘.
 
 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2em; text-align: left;">
 
-<div>
-
-**isolation test (.ctl) 초안 작성**
-
-- Before: 기존 `.ctl` 파일 복사 + 수동 수정, 시행착오
-- After: 기존 패턴을 Claude에 학습시킨 후 초안 즉시 생성
-- 보일러플레이트 구조는 빠르게 확보됨
-
-</div>
 
 <div>
 
@@ -434,13 +431,10 @@ size: 16:9
 
 - Before: 함수 → 빌드 → 테스트 수동 사이클
 - After: 함수와 테스트를 동시에 생성
-- NULL, empty, boundary edge case가 빠져 있어 직접 보완해야 했음
 
 </div>
 
 </div>
-
-<div class="caveat">주의: 자동 생성된 테스트에서 NULL/경계값 edge case가 빠져 있었습니다. 테스트도 반드시 리뷰 대상입니다.</div>
 
 <!-- timing: 50 -->
 
@@ -448,13 +442,9 @@ size: 16:9
 
 # 5시간 자율 작업: vector type / DDL / DML 재구현
 
-**Part 2 심화 에피소드 — 가장 인상 깊었던 실험**
-
-> **"토큰 비용 고려 없이 최대한의 개발 자동화를 맡겼을 때 어떤 게 가능한지?"**
-
 **배경**
 
-- 발표자가 **2개월 이상** 직접 작업했던 vector type 추가, DDL(CREATE TABLE), DML(INSERT/SELECT) 구현
+- 발표자가 2025년 **2개월 이상** 직접 작업했던 vector type 추가, DDL(CREATE TABLE), DML(INSERT/SELECT) 구현
 - Claude Code 에게 해당 작업 전체를 맡기고 **혼자 약 5시간** 고민/작업하도록 둠
 
 **결과**
@@ -473,10 +463,6 @@ size: 16:9
 - **초기에는 작동 안 함** — 계속 디버깅하도록 강제했더니 결국 완성
 - **Claude의 "lazy" 경향 관찰:** 작업 범위를 스스로 축소하려는 경향 있음 — 굴복하지 않고 계속 밀어붙여야 완성됨
 - **토큰 소모 많음** — 5시간 자율 세션은 Max 20x 월정액이 아니었다면 API 청구서로 환산 시 상당한 비용 (발표자 직접 운영 데이터 기준)
-
-<div class="caveat">주의: 실수도 있었음. 강제 디버깅 루프가 필수였음. 단번에 완성되지 않음.</div>
-
-<span class="qualifier">이 규모의 자율 작업은 Max 20x 구독이 없었다면 API 비용 측면에서 현실적이지 않았을 것</span>
 
 <!-- timing: 70 -->
 
@@ -506,18 +492,6 @@ size: 16:9
 
 ---
 
-# Coredump 루프 — 관찰
-
-- 사람이 개입하지 않아도 에러 위치를 스스로 좁혀감
-- NULL deref, 잘못된 포인터 해제, lock 순서 오류까지 루프만으로 해결된 케이스 있었음
-- 단, 루프가 무한정 돌지 않도록 **세션 시간·토큰 상한은 사람이 걸어둬야 함**
-
-<span class="qualifier">Max 20x 의 긴 자율 세션 + 대규모 컨텍스트가 있어야 현실적으로 돌아감</span>
-
-<!-- timing: 35 -->
-
----
-
 # Part 3: 문서/커뮤니케이션
 
 **쓰는 일에도 초안이 필요**
@@ -537,9 +511,9 @@ size: 16:9
 
 **After**
 
-- 변경 코드 범위를 Claude에 보여주고 초안 요청 → 컨벤션에 맞는 초안 빠르게 확보
-
-<span class="qualifier">이 특정 경험에서의 결과</span>
+- 변경 코드 범위를 Claude에 보여주고 초안 요청 → 
+- /cubrid-jira-issue-write 스킬로 jira 작성
+- /jira 이슈와 코드 검토 후 /cubrid-pr-create 스킬로 생성
 
 ---
 
@@ -550,37 +524,15 @@ size: 16:9
 **Scenario**: PR 리뷰어 코멘트에 답변을 작성할 때 Claude를 활용했음.
 
 - Before: 코멘트 읽기 → 관련 코드 다시 찾기 → 응답 직접 작성
-- After: 코멘트 + 관련 코드를 Claude에 주고 응답 초안 요청 → 검토 후 게시
+- After: 코멘트 + 관련 코드를 Claude에 주고 응답 초안 요청 → /jira 이슈와 코드 검토 후 게시
+
+> PR 링크를 읽고 댓글에 모두 대응하고, 맞으면 코드 수정해줘.
+
+> PR 댓글에 대해 모두 대응 댓글 달아줘.
 
 <br>
 
-<span class="qualifier">리뷰 응답 속도가 줄었음. 단, 초안을 그대로 올리지 않고 반드시 읽고 수정했음.</span>
-
-<div class="caveat">주의: 응답 초안은 시작점일 뿐. 리뷰어와의 소통은 개발자가 직접 해야 합니다.</div>
-
 <!-- timing: 45 -->
-
----
-
-# Greptile 봇 + gh CLI 자동화 — 일괄 코멘트 처리
-
-**Scenario**: PR 에 Greptile 봇이 다수 리뷰 코멘트를 남김. 일일이 처리하면 시간 소모.
-
-**Before**
-
-- 코멘트 하나씩 클릭 → 코드 확인 → 응답 작성 → 게시 → 다음 코멘트
-- 봇 코멘트 10개면 같은 흐름 10번 반복
-
-**After**
-
-- `gh api` 로 PR 코멘트 일괄 fetch → Claude 가 코멘트별 응답 초안 생성
-- 검토 후 `gh api ... /replies` 로 일괄 게시 — `resolve-greptile-comments` skill 화 완료
-- PR 리뷰 코멘트 응답·thread resolve 까지 같은 워크플로
-
-<span class="qualifier">현재 skill 로 운영 중. 응답은 검토 후 게시 — 사람의 눈은 여전히 필요</span>
-
-<!-- timing: 50 -->
-
 ---
 
 # JIRA REST API 연동 — CBRD 이슈 양방향 자동화
@@ -596,9 +548,7 @@ size: 16:9
 
 - REST API 로 CBRD-XXXXX 자동 다운로드 → pandoc 으로 JIRA → 마크다운 변환 → AI 가 다루기 쉬운 형태로 보관
 - AI 가 작성한 마크다운을 JIRA grammar 로 역변환 → API 로 본문 직접 업데이트
-- `/jira CBRD-XXXXX` skill 한 줄로 풀 컨텍스트 fetch — 운영 중
-
-<span class="qualifier">"MD SSOT → JIRA · PR 자동 동기화" SDD 흐름의 실제 구현체</span>
+- `/jira CBRD-XXXXX` skill 한 줄로 풀 컨텍스트 fetch
 
 <!-- timing: 60 -->
 
@@ -620,8 +570,6 @@ size: 16:9
 - Marp + 마크다운 기반으로 **Claude Code 와 대화**하며 슬라이드 추가·수정·재배치
 - "X 사례 추가해줘" / "이 슬라이드 더 짧게" / "Pros/Cons 로 재구성" 같은 자연어 지시
 - 매 변경마다 **자동 커밋** — 변경 이력이 그대로 자료의 변천사가 됨
-
-<span class="qualifier">발표 자료 자체가 "AI 와 함께 만든 결과물" — 디자인·디버깅·문서 모두 같은 워크플로</span>
 
 <!-- timing: 50 -->
 
@@ -1075,7 +1023,7 @@ size: 16:9
 
 ---
 
-# 모듈 분석서 — 조직 자산화 제안
+# 모듈 분석서 필요
 
 **개발 4팀 송일한님 사례 · CUBRID 모듈 코드 분석서**
 
@@ -1129,8 +1077,6 @@ size: 16:9
 - AI 가 그래프 노드를 따라가며 **필요한 컨텍스트만 골라 읽음** → 분석 비용·토큰 절약
 - 사람에게도 **인수인계 문서** — 1석 2조
 
-- **팀 단위**: 담당 모듈을 Obsidian / 마크다운 위키로 정리
-- **본부 단위**: 팀별 분석서를 수집·인덱싱 → 본부 전체 일관 컨텍스트
 <span class="qualifier">현재는 한 사람에 의존도 집중 — 조직 자산화 시 신규 입사자 온보딩 + AI 컨텍스트 동시 해결</span>
 
 </div>
