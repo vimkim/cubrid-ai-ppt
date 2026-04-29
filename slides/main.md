@@ -481,7 +481,7 @@ size: 16:9
 
 > **본 발표자료는 모두 Claude Code 와의 대화 방식으로 생성됨**
 
-**Scenario**: 2개월 사용 경험을 정리한 60+ 슬라이드 발표 자료 — 직접 마크다운을 한 줄씩 쓰지 않음
+**Scenario**: 2개월 사용 경험을 정리한 60+ 슬라이드 발표 자료 — 직접 한 줄 쓰지 않음
 
 **Before**
 
@@ -525,6 +525,36 @@ size: 16:9
 
 ---
 
+# Credits — 이 발표를 도와주신 분들
+
+**연구개발본부 동료분들의 피드백·사례 공유 덕분에 본 발표가 완성되었습니다.**
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5em; text-align: left; margin-top: 1.5em;">
+
+<div>
+
+- **주영진** 님
+- **류형규** 님
+
+</div>
+
+<div>
+
+- **김태우** 님
+- **송일한** 님
+
+</div>
+
+</div>
+
+<br>
+
+> 사용 사례·실패담·리뷰 피드백을 아낌없이 공유해 주셔서 감사합니다. 🙏
+
+<!-- timing: 30 -->
+
+---
+
 # 한계 — 다섯 가지 주의점
 
 <!-- timing: 10 -->
@@ -561,8 +591,6 @@ size: 16:9
 - "이 테스트는 어떤 코드 경로를 실행하는가?" 를 본인이 직접 추적
 - coverage / mutation testing 으로 **테스트가 정말 검증하는지** 측정
 
-<span class="qualifier">개인 경험에서의 관찰 — 모든 생성 테스트에서 발생하지는 않았음</span>
-
 <!-- timing: 75 -->
 
 ---
@@ -574,13 +602,7 @@ size: 16:9
 - build → test → build → test 피드백 루프에 집중하다 보면 **AI agent 는 성능을 신경 쓰지 않음**
 - 기능만 맞는 코드, 비효율적 자료구조·알고리즘 선택 사례 관찰됨
 - **목표 성능치를 애초에 주는 것부터 도전적** — "얼마나 빨라야 하는가" 가 사람에게도 불분명한 경우 많음
-
-**대응 (현재 발표자 운영 방식)**
-
-- **기능 구현은 AI, 성능 critical 영역은 사람이 직접 튜닝** — 책임 영역 분리
-- 향후: 성능 측정 벤치마크를 피드백 루프에 추가하면 AI 가 성능까지 고려 가능 (미경험)
-
-<div class="caveat">개인 사용 경험의 한계. 기능 구현 위주 루프만 돌려봤기 때문.</div>
+- 향후: 성능 측정 벤치마크를 피드백 루프에 추가하면 AI 가 성능까지 고려 가능
 
 <!-- timing: 75 -->
 
@@ -659,6 +681,8 @@ size: 16:9
 <div style="padding: 0.4em 0.6em; background: #fff0f0; border: 1px solid #c99; border-radius: 4px;">TC 생성</div>
 <div style="color: #999;">→</div>
 <div style="padding: 0.4em 0.6em; background: #fff0f0; border: 1px solid #c99; border-radius: 4px;">스펙 변경 …</div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #fff0f0; border: 1px solid #c99; border-radius: 4px;">반복 …</div>
 </div>
 </div>
 
@@ -667,17 +691,17 @@ size: 16:9
 <div style="display: flex; gap: 0.3em; flex-wrap: wrap; align-items: center; font-size: 0.78em; margin-top: 0.3em;">
 <div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;">가설</div>
 <div style="color: #999;">→</div>
-<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;"><b>POC 검증 (Claude)</b></div>
+<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;"><b>AI POC (Claude)</b></div>
 <div style="color: #999;">→</div>
 <div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;">설계</div>
 <div style="color: #999;">→</div>
-<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;">스펙 검증</div>
+<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;"><b>스펙 (SSOT) 작성 및 검증</b></div>
 <div style="color: #999;">→</div>
-<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;">unit test · TC</div>
-<div style="color: #999;">→</div>
-<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;">TC 검증</div>
+<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;">unit test · TC 작성 및 검증</div>
 <div style="color: #999;">→</div>
 <div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;"><b>AI 구현</b></div>
+<div style="color: #999;">→</div>
+<div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;"><b>AI 리뷰</b></div>
 <div style="color: #999;">→</div>
 <div style="padding: 0.4em 0.6em; background: #f0fff0; border: 1px solid #9c9; border-radius: 4px;">코드 리뷰</div>
 </div>
@@ -848,13 +872,25 @@ size: 16:9
 
 ---
 
-# Test Driven Development (TDD)
+# Test Driven Development (TDD), Revisited
 
 **실패하는 테스트를 먼저 작성하고, 그 테스트를 통과시키도록 구현하는 개발 방식**
 
-- 테스트를 먼저 쓰면 AI가 그 테스트를 통과하는 구현을 맞춰 생성하는 방식이 잘 동작
-- 검증 기준이 먼저 있으면 AI 출력의 품질 판단이 쉬움
-<!-- timing: 60 -->
+**과거 — TDD 가 비직관적이었던 이유**
+
+- 테스트 작성 자체에 **상당한 시간·비용** 투입 — 구현보다 테스트 코드가 더 길어지는 경우도 빈번
+- "일단 구현부터 해보고 동작을 확인하는 편이 빠르다" 는 직관이 더 강했음
+- 결과적으로 TDD 는 "이론적으로 옳지만 현실에서는 부담스러운 방식" 으로 인식됨
+
+**지금 — AI 시대에 TDD 가 다시 매력적으로**
+
+- 테스트 코드 초안 작성 비용이 **극적으로 낮아짐** — AI 가 케이스·픽스처·assert 까지 빠르게 생성
+- 테스트를 먼저 쓰면 AI 가 그 테스트를 통과하는 구현을 **맞춰 생성** — 사양·검증 기준을 동시에 고정
+- 검증 기준이 먼저 있으면 AI 출력의 품질 판단이 쉬움 — sycophancy / 환각 방어선
+
+> **TDD Revisited** — "쓰기 비싸서 미루던" 시대에서 "AI 와 함께 먼저 쓰는 게 자연스러운" 시대로
+
+<!-- timing: 90 -->
 
 ---
 
@@ -912,9 +948,9 @@ size: 16:9
 
 ---
 
-# 모듈 분석서 (Obsidian Graph) — 조직 자산화 제안
+# 모듈 분석서 — 조직 자산화 제안
 
-**개발 4팀 송일한님 사례 · CUBRID 전체 모듈 코드 분석서**
+**개발 4팀 송일한님 사례 · CUBRID 모듈 코드 분석서**
 
 <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 1em; align-items: center;">
 
@@ -966,22 +1002,20 @@ size: 16:9
 - AI 가 그래프 노드를 따라가며 **필요한 컨텍스트만 골라 읽음** → 분석 비용·토큰 절약
 - 사람에게도 **인수인계 문서** — 1석 2조
 
-**조직 자산화 제안**
-
 - **팀 단위**: 담당 모듈을 Obsidian / 마크다운 위키로 정리
 - **본부 단위**: 팀별 분석서를 수집·인덱싱 → 본부 전체 일관 컨텍스트
-
-</div>
-
-</div>
-
 <span class="qualifier">현재는 한 사람에 의존도 집중 — 조직 자산화 시 신규 입사자 온보딩 + AI 컨텍스트 동시 해결</span>
+
+</div>
+
+</div>
+
 
 <!-- timing: 90 -->
 
 ---
 
-# 연구개발본부 업무 자동화 후보 — Git / GitHub 영역
+# 업무 자동화 후보 — Git / GitHub 영역
 
 **① Git 일상 흐름 자동화**
 
