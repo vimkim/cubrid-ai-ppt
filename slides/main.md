@@ -57,13 +57,52 @@ size: 16:9
 
 ## Pros
 
-- 개발팀 반복 업무의 **큰 비중을 부분 자동화 가능** — 단, 검증·디렉션은 사람 몫
+- 개발팀 반복 업무의 **큰 비중을 부분 자동화 가능**
+- Claude Code에서 떠나지 않고 모든 업무를 처리 가능
 
 ## Cons
 
+— TC 검증·디렉션은 사람 몫
 - 생산성은 **경험 혹은 경력**에 비례할 것이다 - AI가 사용자에게 끊임없이 디렉션을 요구하기 때문
 - 고급 업무를 위해서는 팀 단위로 **Knowledge Base** 구축이 필요하다
 - 체감 상 Claude Max Opus 4.7 1M 한정 - (16만원 이상 😢😢)
+
+---
+
+# 한 줄 요약 — 성공한 영역 vs 실패한 영역
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5em; text-align: left; font-size: 0.92em;">
+
+<div style="padding: 0.8em; background: #eef9ee; border: 2px solid #6c6; border-radius: 8px;">
+
+**✅ 성공한 영역 — 검증 루프가 명확**
+
+- **Code POC 작성** — "이 접근법 가능한가?" 빠른 확인
+- **버그 수정** — 빌드·테스트 루프로 즉시 검증
+- **JIRA 이슈 작성** — 코드 변경 기반 초안
+- **PR description 작성** — diff 기반 자동 정리
+- **PR 리뷰 보조** — 변경 범위 요약, 코멘트 응답
+- **성능 측정 / 분석** — 벤치마크 결과 해석
+
+</div>
+
+<div style="padding: 0.8em; background: #fdeded; border: 2px solid #c66; border-radius: 8px;">
+
+**❌ 실패한 영역 — 검증이 어려운 곳**
+
+- **좋은 동시성 TC 작성** — race condition 재현·검증 난해
+- **비동기 TC 작성 (vacuum 등)** — 타이밍·상태 의존성 높음
+- **성능 높은 코드 작성** — "얼마나 빨라야 하나" 자체가 모호
+- **공통점**: build / unit test 루프로 옳고 그름을 가릴 수 없음
+- → AI 가 "통과시키기" 가 아니라 **"옳음" 을 학습할 신호가 없음**
+
+</div>
+
+</div>
+
+> **핵심 패턴** — *"피드백 루프가 닫히면 자동화 성공, 닫히지 않으면 실패."* AI 의 강점·약점을 가르는 단일 기준.
+
+<!-- timing: 80 -->
 
 ---
 
